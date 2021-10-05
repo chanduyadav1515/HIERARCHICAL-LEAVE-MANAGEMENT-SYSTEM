@@ -1,0 +1,6 @@
+step 1 : open command prompt as administrator
+step 2 : change folder to the location where the .py file exists
+step 3 : type
+pyinstaller.exe --onefile --windowed --name myapps --icon=xxxxx.ico xxxx.py
+
+step 4 : change app name, icon name, and the final python filename and press enter 

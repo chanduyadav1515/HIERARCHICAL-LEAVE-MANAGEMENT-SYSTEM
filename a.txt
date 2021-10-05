@@ -1,0 +1,132 @@
+
+
+
+path="C:\\Users\\Rohit\\Desktop\\LETTER_APPROVAL\\index.xlsx"  
+wb1 =openpyxl.load_workbook(path)  
+sheet_obj1 = wb1.active
+m_row1 = sheet_obj1.max_row
+for i in range(1, m_row1+1):
+        
+    cell_obj1 = sheet_obj1.cell(row=i,column=3)
+    if (cell_obj1.value == 1):
+        #print("found match")
+        column = "A"
+        f_id1 = column+str(i)
+        f_name1 = sheet_obj1[f_id1].value
+        print(f_name1)
+        b1  = ".docx"
+        c1=f_name1+b1
+        a1=a1 +'   '+ c1
+
+wb = load_workbook('C:\\Users\\Rohit\\Desktop\\LETTER_APPROVAL\\index.xlsx')
+
+# functions
+def call1():
+    sheet = wb['apple']
+
+    for x in range(2, 9):
+        column = "C"
+        mat = column+str(x)
+        Value = sheet[mat].value
+        if (Value == 1):
+             #print("found match")
+             r = x
+             break
+    def accept():
+        messagebox.showinfo("Forwarded", "Your response has been forwarded to PRINCIPAL.\n                                 Thankyou")
+        coment = tCom.get("1.0",END)
+        document.add_paragraph(str(coment))
+        document.save(c) # save comments to the word file  - if any
+        column = "C"
+        cell_no = column+str(r)
+        sheet[cell_no] = 2   #  acknowledged and forwarded
+        column = "D"
+        cell_no = column+str(r)
+        sheet[cell_no] = 1  #  raise a ticket for dean
+        wb.save('index.xlsx')
+        
+    def reject():
+        messagebox.showerror("Rejected", "Your response has been submitted successfully.\n                                 Thankyou")
+        coment = tCom.get("1.0",END)
+        document.add_paragraph(str(coment))
+        document.save(c)  # save comments to the word file  - if any
+        column = "C"
+        cell_no = column+str(r)
+        sheet[cell_no] = 3
+        column = "B"
+        cell_no = column+str(r)
+        sheet[cell_no] = 4  #  raise a ticket for faculty
+        wb.save('index.xlsx')
+
+    fac=tkinter.Tk()
+    fac.title("HEAD OF THE DEPARTMENT")
+    fac.geometry('750x600')
+    fac.configure(bg='WHITE')
+       
+    path="C:\\Users\\Rohit\\Downloads\\LETTER_APPROVAL\\index.xlsx"  
+    wb_obj =openpyxl.load_workbook(path)  
+    sheet_obj = wb_obj.active
+    m_row = sheet_obj.max_row
+    for x in range(1, m_row+1):
+        
+        cell_obj = sheet_obj.cell(row=x,column=3)
+        if (cell_obj.value == 1):
+            print("found match")
+            column = "A"
+            f_id = column+str(x)
+            f_name = sheet_obj[f_id].value
+            print(f_name)
+            b  = ".docx"
+            c=f_name+b
+            global a
+            a=a +'   '+ c
+            document = Document(c)
+            sub = document.paragraphs[2].text
+            body = document.paragraphs[4].text
+            date = document.paragraphs[0].text
+            From = document.paragraphs[6].text
+
+            lFrom=Label(fac, text ="SUBMITTED BY      :  ", background = "white", fg="blue",font = "Helvetica 12 ")
+            lFrom.place(x=20, y=20)
+            lFrom_text=Label(fac,text=From, background = "white", fg="black", justify="left",font = "times 12")
+            lFrom_text.place(x=220, y=22)
+            lDate=Label(fac, text ="Date Submitted : ", background = "white", fg="blue",font = "Helvetica 12")
+            lDate.place(x=420, y=20)
+            lDate_text=Label(fac,text=date, background = "white", fg="black", justify="left",font = "times 12")
+            lDate_text.place(x=600, y=22)
+
+            lSub=Label(fac, text ="SUBJECT            : ", background = "white", fg="blue",font = "Helvetica 14 bold ")
+            lSub.place(x=20, y=70)
+            lSubject=Label(fac,text=sub, wraplength=600, background = "white", fg="black", justify="left",font = "times 12")
+            lSubject.place(x=220, y=75)
+
+            lBody=Label(fac, text ="CONTENT", background = "white", fg="blue",font = "Helvetica 14 bold")
+            lBody.place(x=20, y=120)
+            lBody_text=Label(fac,text=body, wraplength=600, background = "white", fg="black", justify="left",font = "times 13")
+            lBody_text.place(x=40, y=180)
+
+            lCom=Label(fac, text ="COMMENTS", background = "white", fg="blue",font = "Helvetica 14 bold")
+            lCom.place(x=20, y=350)
+
+            bAccept=Button(fac, text ='ACCEPT', command=accept, background = "GREEN",fg = "white", width = 10, height = 2)
+            bAccept.place(x = 280, y = 500)
+            bReject=Button(fac, text ='REJECT', command=reject, background = "RED",fg = "white", width = 10, height = 2)
+            bReject.place(x = 400, y = 500)
+            tCom =  Text(fac, height=2, width=100)
+            #eCom.insert(10, "COMMENTS")
+            tCom.place(x = 40, y = 420)
+            tCom.focus()
+    #helloCallBack(a)       
+    fac.mainloop()
+           
+
+top = tkinter.Tk()
+top.title("After Download")
+top.geometry('250x250')
+top.configure(bg='WHITE')
+B = tkinter.Button(top, text ="Click Here!!!",command=call1)
+B.pack()       
+
+
+#helloCallBack()
+open_webbrowser()        
